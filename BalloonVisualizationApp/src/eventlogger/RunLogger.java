@@ -31,8 +31,12 @@ static void CreateLogEntry(Object[][] table, Object ob, String eventType) {
 		Class2 c2 = new Class2();
 		log.add(new LogEntry(c2, "creation"));
 		
+		Class3 c3 = new Class3();
+		log.add(new LogEntry(c3, "creation"));
+		
 		log.get(0).printLogEntry();
 		log.get(1).printLogEntry();
+		log.get(2).printLogEntry();
 	}
 
 }
