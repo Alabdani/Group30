@@ -1,7 +1,7 @@
 Group30
 =======
 
-CPSC430 group 30 project TESTING
+CPSC430 group 30 project
 Put your code up on GitHub (or equivalent) and provide us a link to your repository. 
 We are not expecting to see final code, but we are expecting to see that you have made a start on each component shown
 in your architecture.
