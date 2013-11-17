@@ -6,6 +6,17 @@ public class LogEntry {
 	public long eventTime;
 	public String eventType;
 	
+	public LogEntry() {
+		
+	}
+	
+	public LogEntry(int hashCode, String className,String t) {
+		objectType = className;
+		objectID = hashCode;
+		eventTime = System.currentTimeMillis();
+		eventType = t;
+	}
+	
 	public LogEntry(Object a, String t) {
 		objectType = parseClassName(a.toString());
 		objectID = a.hashCode();

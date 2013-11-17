@@ -1,5 +1,9 @@
 package eventlogger;
 
-public class Class3 {
+import java.util.ArrayList;
 
+public class Class3 {
+	
+	byte[][] array = new byte[800][800]; 
+	
 }
