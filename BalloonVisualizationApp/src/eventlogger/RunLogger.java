@@ -45,7 +45,6 @@ public class RunLogger {
 				Class1 c1 = new Class1();
 				PhantomReference<Class1> pr1 = new PhantomReference<Class1>(c1, refQ);
 				phantomRefs.add(pr1);
-				System.out.println("object created: " + c1.hashCode());
 				pRefToObj.putHashCodes(pr1, c1);
 				log.add(new LogEntry(c1, "creation"));
 				objQ.add(c1);

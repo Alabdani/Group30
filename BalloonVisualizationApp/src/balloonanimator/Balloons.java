@@ -1,11 +1,5 @@
 package balloonanimator;
 
-
-
-
-
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,15 +9,18 @@ import java.util.List;
 import javax.swing.JPanel;
 
 
-
+//Where a list of balloons are created
 
 public class Balloons extends JPanel {
 	private List<Balloon> Balls;
-	
+
+	//each balloon is given a random color and a timer
 	public Balloons(){
 		Balls = new ArrayList<Balloon>(25);
 		for(int i = 0; i < 25 ; i++){
-			Balls.add(new Balloon(new Color(random(255), random(255), random(255), random(255))));
+			Balloon ball = new Balloon(new Color(random(255), random(255), random(255), random(255)));
+			ball.addTimer(i*3);
+			Balls.add(ball);
 		}
 	}
 	   public static int random(int maxRange) {
