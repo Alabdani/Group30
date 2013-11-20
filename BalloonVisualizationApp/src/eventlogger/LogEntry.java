@@ -10,17 +10,17 @@ public class LogEntry {
 		
 	}
 	
-	public LogEntry(int hashCode, String className,String t) {
+	public LogEntry(int hashCode, String className,String t, long startTime) {
 		objectType = className;
 		objectID = hashCode;
-		eventTime = System.currentTimeMillis();
+		eventTime = System.currentTimeMillis() - startTime;
 		eventType = t;
 	}
 	
-	public LogEntry(Object a, String t) {
+	public LogEntry(Object a, String t, long startTime) {
 		objectType = parseClassName(a.toString());
 		objectID = a.hashCode();
-		eventTime = System.currentTimeMillis();
+		eventTime = System.currentTimeMillis() - startTime;
 		eventType = t;
 	}
 	
