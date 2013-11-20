@@ -3,13 +3,13 @@ package eventlogger;
 public class BalloonInfo {
 	
 	public String objectType;
-	public long creationTime;
-	public long releaseTime;
+	public int creationTime;
+	public int releaseTime;
 	
 	public BalloonInfo(String className, long t1, long t2) {
 		objectType = className;
-		creationTime = t1;
-		releaseTime = t2;
+		creationTime = (int) t1;
+		releaseTime = (int) t2;
 	}
 	
 }

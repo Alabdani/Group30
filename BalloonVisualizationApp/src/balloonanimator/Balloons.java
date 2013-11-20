@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import eventlogger.BalloonInfo;
+
 
 //Where a list of balloons are created
 
@@ -15,12 +17,19 @@ public class Balloons extends JPanel {
 	private List<Balloon> Balls;
 
 	//each balloon is given a random color and a timer
-	public Balloons(){
+	public Balloons(BalloonInfo[] bInfo){
 		Balls = new ArrayList<Balloon>(25);
-		for(int i = 0; i < 25 ; i++){
+		BalloonInfo bInfoEntry;
+		for(int i = 0; i < bInfo.length -1 ; i++){
+			bInfoEntry = bInfo[i];
+			if(bInfoEntry != null) {
 			Balloon ball = new Balloon(new Color(random(255), random(255), random(255), random(255)));
-			ball.addTimer(i*3);
+			ball.addTimer(bInfoEntry.releaseTime);
+			ball.setCreationTime(bInfoEntry.creationTime);
+			
+			
 			Balls.add(ball);
+			}
 		}
 	}
 	   public static int random(int maxRange) {

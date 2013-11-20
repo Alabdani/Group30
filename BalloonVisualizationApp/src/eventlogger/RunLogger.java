@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
+import balloonanimator.Background;
+import balloonanimator.Balloons;
+import balloonanimator.StickFigures;
+
 
 
 public class RunLogger {
@@ -80,7 +86,8 @@ public class RunLogger {
 				
 				BalloonInfo[] bI= logEntryArrayToBalloonInfoArray(log);
 				
-			//	System.out.println(log.size());				
+				
+				System.out.println(bI.length);				
 				
 				for(int j=0; j < (bI.length - 1); j++) {
 					if(bI[j] != null) {
@@ -90,6 +97,22 @@ public class RunLogger {
 						//System.out.println("NULL");
 					}
 				}
+				
+				JFrame frame = new JFrame("Rising Balloon");
+				Background bg = new Background();
+				Balloons balls = new Balloons(bI);
+				StickFigures stickmans = new StickFigures();
+				frame.setSize(800, 800);
+				frame.setVisible(true);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+				//balls are added to the frame
+				frame.add(balls);
+				bg.add(balls);
+				
+				// thread starts
+				new Thread(bg).start();
+				
 				
 			}
 		}).start();
@@ -161,11 +184,11 @@ public class RunLogger {
 
 			if(balloonInfoHM.containsKey(currLogEntry.objectID)) {
 				indexFromHM = balloonInfoHM.get(currLogEntry.objectID);
-				balloonInfoArray[indexFromHM].releaseTime = currLogEntry.eventTime;
+				balloonInfoArray[indexFromHM].releaseTime = (int) currLogEntry.eventTime;
 			}
 			else {
 				balloonInfoHM.put(currLogEntry.objectID, j);
-				balloonInfoArray[j] = new BalloonInfo(currLogEntry.objectType, currLogEntry.eventTime, -1);
+				balloonInfoArray[j] = new BalloonInfo(currLogEntry.objectType, currLogEntry.eventTime, 10000000);
 				j++;
 			}
 			i++;

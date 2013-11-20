@@ -44,7 +44,7 @@ public class Background extends JComponent implements Runnable {
 		for(Balloon ball : getBalloons().getBall()){
 			int x = (int) (Math.random()*700);
 			
-			ball.setLocation(new Point(x,800));
+			ball.setLocation(new Point(x,550));
 			
 		};;;;
 		
@@ -71,8 +71,22 @@ public class Background extends JComponent implements Runnable {
 		//Checks if the balloons are ready to fly
 			 for(Balloon ball : getBalloons().getBall()){
 				 int time = ball.getTimer();
+				 int ct = ball.getCreationTime();
 				 
-				 if(time < 1){
+				 if(time == 0 && ct ==0 ){
+					 move(ball);
+					 
+				 }else{
+					 if(ct >= 1){
+						 ball.decrementCreationTime();
+					 } else{
+						 ball.decrementTimer();
+						 
+					 }
+					 
+				 }
+				 
+/*				 if(time < 1){
 					 
 				 move(ball); 
 				 
@@ -80,9 +94,10 @@ public class Background extends JComponent implements Runnable {
 				 
 	//			 System.out.println(time);
 				 
-				 }
+				 }*/
 				 
-				 ball.decrementTimer();
+				 
+				 //ball.decrementTimer();
 				 
 				 
 			 }

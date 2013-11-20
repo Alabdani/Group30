@@ -18,7 +18,7 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Balloon extends JPanel{
 
-	
+	  private int creationtime; 	
 	  private Color color;
 	  private Point point;
 	  private int timer;
@@ -32,6 +32,20 @@ public class Balloon extends JPanel{
       public Balloon(Color color){
     	  setColor(color);
     	  
+      }
+      public int getCreationTime(){
+    	  return creationtime;
+      }
+      
+      public void decrementCreationTime(){
+    	  int k = getCreationTime();
+    	  if( k !=0){
+    		  k = k -1;
+    		  setCreationTime(k);
+    	  }
+      }
+      public void setCreationTime(int ct){
+    	  this.creationtime = ct;
       }
       
 
@@ -79,7 +93,8 @@ public class Balloon extends JPanel{
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		RenderingHints.VALUE_ANTIALIAS_ON);
 		Point p = getLocation();
-		if(p.y > 50){
+		int ct = getCreationTime();
+		if(p.y > 50 && ct == 0){
 		g2d.setColor(color);
 		g2d.fillOval(p.x, p.y, 50, 60);
 		g2d.setColor(Color.black);
