@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import balloonanimator.Background;
+import balloonanimator.Balloon;
 import balloonanimator.Balloons;
 import balloonanimator.StickFigures;
 
@@ -28,11 +29,13 @@ public class RunLogger {
 
 		final ArrayList<LogEntry> log = new ArrayList<LogEntry>(); // this is the eventual output
 		final phantomRefHashMap<Integer, Integer> pRefToObj = new phantomRefHashMap<Integer, Integer>(); //this maps phantomRef hashcodes to their object hashcodes
-		final ArrayList<Object> objQ = new ArrayList<Object>(); // objects that are still referenced
+		final ArrayList<Object> objQC1 = new ArrayList<Object>(); // objects that are still referenced
+		final ArrayList<Object> objQC2 = new ArrayList<Object>(); // objects that are still referenced
+		final ArrayList<Object> objQC3 = new ArrayList<Object>(); // objects that are still referenced
 		final ArrayList<PhantomReference> phantomRefs = new ArrayList<PhantomReference>();
 		
-		final int creationRate = 1;
-		final int deleteRate = 1;
+		final int creationRate = 20;
+		final int deleteRate = 20;
 		
 		new Thread(new Runnable() {
 			public void run() {
@@ -40,7 +43,7 @@ public class RunLogger {
 				int classType = rand.nextInt(3);
 				int i = 0;
 				
-				while(i < 50) {
+				while(i < 40) {
 					
 					try {
 						Thread.sleep(creationRate);
@@ -57,7 +60,7 @@ public class RunLogger {
 				phantomRefs.add(pr1);
 				pRefToObj.putHashCodes(pr1, c1);
 				log.add(new LogEntry(c1, "creation", startTime));
-				objQ.add(c1);
+				objQC1.add(c1);
 				c1 =null; 
 				break;
 				
@@ -67,7 +70,7 @@ public class RunLogger {
 				phantomRefs.add(pr2);
 				pRefToObj.putHashCodes(pr2, c2);
 				log.add(new LogEntry(c2, "creation", startTime));
-				objQ.add(c2);
+				objQC2.add(c2);
 				c2 =null; 
 				break;
 				
@@ -77,31 +80,26 @@ public class RunLogger {
 				phantomRefs.add(pr3);
 				pRefToObj.putHashCodes(pr3, c3);
 				log.add(new LogEntry(c3, "creation", startTime));
-				objQ.add(c3);
+				objQC3.add(c3);
 				c3 =null; 
 					break;
 				}
+			//	System.out.println("" + objQ.size());
 				i++;
 				}
 				
 				BalloonInfo[] bI= logEntryArrayToBalloonInfoArray(log);
 				
-				
-				System.out.println(bI.length);				
-				
 				for(int j=0; j < (bI.length - 1); j++) {
-					if(bI[j] != null) {
-					System.out.println(bI[j].objectType + " " + bI[j].creationTime + " " + bI[j].releaseTime + "         " + j);
+					if((bI[j] != null) && (bI[j].releaseTime != -1)) {
+					System.out.println(bI[j].objectType + " " + bI[j].creationTime + " " + bI[j].releaseTime + "         " + (bI[j].releaseTime - bI[j].creationTime));
 					}
-					else {
-						//System.out.println("NULL");
 					}
-				}
 				
 				JFrame frame = new JFrame("Rising Balloon");
 				Background bg = new Background();
 				Balloons balls = new Balloons(bI);
-				StickFigures stickmans = new StickFigures();
+				//StickFigures stickmans = new StickFigures();
 				frame.setSize(800, 800);
 				frame.setVisible(true);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,24 +127,73 @@ public class RunLogger {
 				}
 				
 				while(true) {
-					objQSize = objQ.size();
+					objQSize = objQC1.size();
 					
 					try {
-						Thread.sleep(deleteRate);
+						Thread.sleep(1);
 					} catch (InterruptedException e1) {
 					}
 					
 					if(objQSize > 0) {
 						
-						Random rand = new Random();
-						int randomObjectToRemove = rand.nextInt(objQ.size());
-						
-				ob = objQ.remove(randomObjectToRemove);
+				ob = objQC1.remove(0);
 				ob = null;
 					}
 				}
 			} }).start();
-	
+		////////////////////////////////////////////////
+		new Thread(new Runnable() {
+			public void run() {
+				Object ob;
+				int objQSize;
+				
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e1) {
+				}
+				
+				while(true) {
+					objQSize = objQC2.size();
+					
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e1) {
+					}
+					
+					if(objQSize > 0) {
+						
+				ob = objQC2.remove(0);
+				ob = null;
+					}
+				}
+			} }).start();
+	////////////////////////////////////////////////////////////
+		new Thread(new Runnable() {
+			public void run() {
+				Object ob;
+				int objQSize;
+				
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e1) {
+				}
+				
+				while(true) {
+					objQSize = objQC3.size();
+					
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+					}
+					
+					if(objQSize > 0) {
+						
+				ob = objQC3.remove(0);
+				ob = null;
+					}
+				}
+			} }).start();
+		////////////////////////////////////////////////////////////
 		
 		new Thread(new Runnable() {
 			public void run() {
@@ -181,14 +228,14 @@ public class RunLogger {
 		
 		while(i < logSize) {
 			currLogEntry = log.get(i);
-
+			
 			if(balloonInfoHM.containsKey(currLogEntry.objectID)) {
 				indexFromHM = balloonInfoHM.get(currLogEntry.objectID);
 				balloonInfoArray[indexFromHM].releaseTime = (int) currLogEntry.eventTime;
 			}
 			else {
 				balloonInfoHM.put(currLogEntry.objectID, j);
-				balloonInfoArray[j] = new BalloonInfo(currLogEntry.objectType, currLogEntry.eventTime, 10000000);
+				balloonInfoArray[j] = new BalloonInfo(currLogEntry.objectType, currLogEntry.eventTime, -1);
 				j++;
 			}
 			i++;
