@@ -1,5 +1,6 @@
 package balloonanimator;
 
+import javax.media.NoPlayerException;
 import javax.swing.JFrame;
 
 import java.awt.Color;
@@ -8,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
-
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -27,6 +28,9 @@ public class Balloon extends JPanel{
 	            { 100, 40 }, { 60, 80 }, { 80, 80 }, { 50, 90 }, 
 	            { 20, 120 }, { 40, 90 }, { 0, 60 } 
 	        };
+	  
+	  PopPlayer pop = new PopPlayer();
+
 
       
       public Balloon(Color color){
@@ -102,6 +106,12 @@ public class Balloon extends JPanel{
 		}else{
 			
 			//where its suppose to explode
+			try {
+				pop.explode();
+			} catch (NoPlayerException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 
