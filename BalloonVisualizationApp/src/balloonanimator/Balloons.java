@@ -21,16 +21,16 @@ public class Balloons extends JPanel {
 
 	//each balloon is given a random color and a timer
 	public Balloons(BalloonInfo[] bInfo){
-		
+
 		Balls = new ArrayList<Balloon>(25);
 		BalloonInfo bInfoEntry;
 		for(int i = 0; i < bInfo.length -1 ; i++){
 			bInfoEntry = bInfo[i];
 			if(bInfoEntry != null) {
 				Balloon ball = null;
-				
+
 				switch(bInfoEntry.objectType) {
-				
+
 				case "Class1":
 					ball = new Balloon(red);
 					break;
@@ -41,29 +41,29 @@ public class Balloons extends JPanel {
 					ball = new Balloon(green);
 					break;
 				}
-			ball.addTimer(bInfoEntry.releaseTime);
-			ball.setCreationTime(bInfoEntry.creationTime);
-			
-			
-			Balls.add(ball);
+				ball.addTimer(bInfoEntry.releaseTime);
+				ball.setCreationTime(bInfoEntry.creationTime);
+
+
+				Balls.add(ball);
 			}
 		}
 	}
-	   public static int random(int maxRange) {
-	        return (int) Math.round((Math.random() * maxRange));
-	    }
-	   
-	     @Override
-	        protected void paintComponent(Graphics g) {
-	            super.paintComponent(g);
-	            Graphics2D g2d = (Graphics2D) g.create();
-	            for (Balloon ball : Balls) {
-	                ball.paint(g2d);
-	            }
-	            g2d.dispose();
-	        }
-	
-	   public List<Balloon> getBall(){
+	public static int random(int maxRange) {
+		return (int) Math.round((Math.random() * maxRange));
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g.create();
+		for (Balloon ball : Balls) {
+			ball.paint(g2d);
+		}
+		g2d.dispose();
+	}
+
+	public List<Balloon> getBall(){
 		return Balls;
 	}
 
