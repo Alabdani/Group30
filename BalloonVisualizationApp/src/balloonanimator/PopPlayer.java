@@ -16,13 +16,13 @@ public class PopPlayer {
     File f;
     
     switch (i) {
-    	case 0: f = new File("sounds/balloon1.wav");
+    	case 0: f = new File("res/sounds/balloon1.wav");
     				break;
-    	case 1: f = new File("sounds/balloon2.wav");
+    	case 1: f = new File("res/sounds/balloon2.wav");
     				break;
-    	case 2: f = new File("sounds/balloon3.wav");
+    	case 2: f = new File("res/sounds/balloon3.wav");
     				break;
-    	case 3: f = new File("sounds/balloon4.wav");
+    	case 3: f = new File("res/sounds/balloon4.wav");
     				break;
     	default: System.err.println("error in soundeffect");
     			f = null;

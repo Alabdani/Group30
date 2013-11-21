@@ -106,12 +106,6 @@ public class Balloon extends JPanel{
 		}else{
 			
 			//where its suppose to explode
-			try {
-				pop.explode();
-			} catch (NoPlayerException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 
