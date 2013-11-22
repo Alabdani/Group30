@@ -34,8 +34,8 @@ public class RunLogger {
 		final ArrayList<Object> objQC3 = new ArrayList<Object>(); // objects that are still referenced
 		final ArrayList<PhantomReference> phantomRefs = new ArrayList<PhantomReference>();
 
-		final int creationRate = 20;
-		final int deleteRate = 20;
+		final int creationRate = 5;
+		final int deleteRate = 5;
 
 		new Thread(new Runnable() {
 			public void run() {
@@ -98,11 +98,40 @@ public class RunLogger {
 
 				BalloonInfo[] bI= logEntryArrayToBalloonInfoArray(log);
 
+				System.out.println(bI.length);				
+				int a = 0;
+				int b = 0;
+				int c = 0;
+				int d = 0;
+				int e = 0;
+				int f = 0;
+				
 				for(int j=0; j < (bI.length - 1); j++) {
 					if((bI[j] != null) && (bI[j].releaseTime != -1)) {
-						System.out.println(bI[j].objectType + " " + bI[j].creationTime + " " + bI[j].releaseTime + "         " + (bI[j].releaseTime - bI[j].creationTime));
+					System.out.println(bI[j].objectType + " " + bI[j].creationTime + " " + bI[j].releaseTime + "         " + (bI[j].releaseTime - bI[j].creationTime));
+					switch(bI[j].objectType) {
+					
+					case "Class1":
+						d = d + (bI[j].releaseTime - bI[j].creationTime);
+						a++;
+						break;
+					case "Class2":
+						e = e + (bI[j].releaseTime - bI[j].creationTime);
+						b++;
+						break;
+					case "Class3":
+						f = f + (bI[j].releaseTime - bI[j].creationTime);
+						c++;
+						break;
+					}
+					}
+					else {
+						//System.out.println("NULL");
 					}
 				}
+				System.out.println("CLASS1 avg: " + d/a);
+				System.out.println("CLASS2 avg: " + e/b);
+				System.out.println("CLASS3 avg: " + f/c);
 
 				JFrame frame = new JFrame("Rising Balloon");
 				Background bg = new Background();
@@ -129,7 +158,7 @@ public class RunLogger {
 				int objQSize;
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(3);
 				} catch (InterruptedException e1) {
 				}
 
@@ -137,7 +166,7 @@ public class RunLogger {
 					objQSize = objQC1.size();
 
 					try {
-						Thread.sleep(100);
+						Thread.sleep(50);
 					} catch (InterruptedException e1) {
 					}
 
@@ -155,7 +184,7 @@ public class RunLogger {
 				int objQSize;
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(3);
 				} catch (InterruptedException e1) {
 				}
 
@@ -163,7 +192,7 @@ public class RunLogger {
 					objQSize = objQC2.size();
 
 					try {
-						Thread.sleep(50);
+						Thread.sleep(10);
 					} catch (InterruptedException e1) {
 					}
 
@@ -181,7 +210,7 @@ public class RunLogger {
 				int objQSize;
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(3);
 				} catch (InterruptedException e1) {
 				}
 

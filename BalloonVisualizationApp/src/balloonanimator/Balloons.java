@@ -15,9 +15,9 @@ import eventlogger.BalloonInfo;
 
 public class Balloons extends JPanel {
 	private List<Balloon> Balls;
-	Color red = new Color(255,0,0,70);
-	Color blue = new Color(0,0,255,70);
-	Color green = new Color(0,255,0,70);
+	Color red = new Color(255,0,0,255);
+	Color blue = new Color(0,0,255,255);
+	Color green = new Color(0,255,0,255);
 
 	//each balloon is given a random color and a timer
 	public Balloons(BalloonInfo[] bInfo){
@@ -41,6 +41,7 @@ public class Balloons extends JPanel {
 					ball = new Balloon(green);
 					break;
 				}
+				ball.setCounter();
 				ball.addTimer(bInfoEntry.releaseTime);
 				ball.setCreationTime(bInfoEntry.creationTime);
 

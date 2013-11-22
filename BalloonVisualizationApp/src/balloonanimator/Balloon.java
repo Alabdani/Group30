@@ -21,6 +21,7 @@ public class Balloon extends JPanel{
 
 	private int creationtime; 	
 	private Color color;
+	private int counter;
 	private Point point;
 	private int timer;
 	private double points[][] = { 
@@ -31,7 +32,13 @@ public class Balloon extends JPanel{
 
 	PopPlayer pop = new PopPlayer();
 
-
+	  public void setCounter(){
+		  counter = 1;
+		  }
+		  
+		  public void hasPopped(){
+		  counter = 0;
+		  }
 
 	public Balloon(Color color){
 		setColor(color);
@@ -105,13 +112,18 @@ public class Balloon extends JPanel{
 			g2d.drawLine(p.x+25, p.y+115, p.x+25,p.y+60);
 		}else{
 
-			//where its suppose to explode
-//			try {
-//				pop.explode();
-//			} catch (NoPlayerException | IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			if(p.y < 50 && counter == 1){
+				try {
+				pop.explode();
+				} catch (NoPlayerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				hasPopped();
+				}
 		}
 	}
 
