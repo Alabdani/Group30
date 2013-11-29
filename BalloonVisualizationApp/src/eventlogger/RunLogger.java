@@ -27,7 +27,7 @@ public class RunLogger {
 
 		final ReferenceQueue<Object> refQ = new ReferenceQueue<Object>(); // used to check if objects have been GCd
 
-		final ArrayList<LogEntry> log = new ArrayList<LogEntry>(); // this is the eventual output
+		final ArrayList<LogEntry> log = new ArrayList<LogEntry>(); // 
 		final phantomRefHashMap<Integer, Integer> pRefToObj = new phantomRefHashMap<Integer, Integer>(); //this maps phantomRef hashcodes to their object hashcodes
 		final ArrayList<Object> objQC1 = new ArrayList<Object>(); // objects that are still referenced
 		final ArrayList<Object> objQC2 = new ArrayList<Object>(); // objects that are still referenced
@@ -37,6 +37,7 @@ public class RunLogger {
 		final int creationRate = 5;
 		final int deleteRate = 5;
 
+		// Random object creation thread
 		new Thread(new Runnable() {
 			public void run() {
 				Random rand = new Random();
@@ -98,6 +99,7 @@ public class RunLogger {
 
 				BalloonInfo[] bI= logEntryArrayToBalloonInfoArray(log);
 
+				// This was for testing
 				System.out.println(bI.length);				
 				int a = 0;
 				int b = 0;
@@ -133,6 +135,7 @@ public class RunLogger {
 				System.out.println("CLASS2 avg: " + e/b);
 				System.out.println("CLASS3 avg: " + f/c);
 
+				// Creates the frame
 				JFrame frame = new JFrame("Rising Balloon");
 				Background bg = new Background();
 				Balloons balls = new Balloons(bI);
@@ -144,14 +147,14 @@ public class RunLogger {
 				frame.add(balls);
 				bg.add(balls);
 
-				// thread starts
+				// Draws balloons
 				new Thread(bg).start();
 
 
 			}
 		}).start();
 
-
+// Class1 Object deletion thread
 		new Thread(new Runnable() {
 			public void run() {
 				Object ob;
@@ -178,6 +181,7 @@ public class RunLogger {
 				}
 			} }).start();
 		////////////////////////////////////////////////
+		// Class2 Object deletion thread
 		new Thread(new Runnable() {
 			public void run() {
 				Object ob;
@@ -204,6 +208,7 @@ public class RunLogger {
 				}
 			} }).start();
 		////////////////////////////////////////////////////////////
+		// Class3 Object deletion thread
 		new Thread(new Runnable() {
 			public void run() {
 				Object ob;
@@ -230,7 +235,7 @@ public class RunLogger {
 				}
 			} }).start();
 		////////////////////////////////////////////////////////////
-
+		// Garbage Collection checking thread
 		new Thread(new Runnable() {
 			public void run() {
 				Object removedOb;
@@ -252,7 +257,7 @@ public class RunLogger {
 	}
 
 
-
+// Balloon Information Extractor component
 	static BalloonInfo[] logEntryArrayToBalloonInfoArray(ArrayList<LogEntry> log) {
 		int logSize = log.size();
 		HashMap<Integer, Integer> balloonInfoHM = new HashMap<Integer, Integer>();
